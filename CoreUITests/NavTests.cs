@@ -9,7 +9,7 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 namespace CoreUITests
 {
     [TestFixture]
-    public class CoreUI
+    public class NavTests
     {
         // public static string baseUrl = "http://localhost:10101/";
         private const string BaseUrl = "http://coreui.azurewebsites.net/";
@@ -56,5 +56,23 @@ namespace CoreUITests
                 Assert.AreEqual(_driver.Title, "ui.core: people");
             }
         }
+
+        [Test(Description = "Widget should have title of ui.core: widget")]
+        public void WidgetTitle()
+        {
+            using (_driver)
+            {
+                _driver.Navigate().GoToUrl(BaseUrl + "widget");
+                Assert.AreEqual(_driver.Title, "ui.core: widget");
+            }
+        }
+
+
+
+
+
+
+
+
     }
 }
