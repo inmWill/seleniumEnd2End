@@ -11,10 +11,7 @@ namespace CoreUITests
     [TestClass]
     public class CoreUI
     {
-<<<<<<< HEAD
-=======
        // public static string baseUrl = "http://localhost:10101/";
->>>>>>> 1bcdeaa479f782f14c1332cfeaee81dd8cb40080
         public static string baseUrl = "http://coreui.azurewebsites.net/";
 
         [TestMethod]
