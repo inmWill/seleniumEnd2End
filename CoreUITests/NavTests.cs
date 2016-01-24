@@ -11,15 +11,16 @@ namespace CoreUITests
     [TestClass]
     public class CoreUI
     {
-        public static string baseUrl = "http://localhost:10101/";
+       // public static string baseUrl = "http://localhost:10101/";
+        public static string baseUrl = "http://coreui.azurewebsites.net/";
 
         [TestMethod]
         public void DashboardTitle()
         {
             using (IWebDriver wdriver = new NgWebDriver(new ChromeDriver(@"dependencies")))
             {
+                wdriver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(5));
                 wdriver.Navigate().GoToUrl(baseUrl);
-                wdriver.Manage().Window.Maximize();
                 Assert.AreEqual(wdriver.Title, "ui.core: dashboard");
                 wdriver.Quit();
             }
@@ -30,8 +31,8 @@ namespace CoreUITests
         {
             using (IWebDriver wdriver = new NgWebDriver(new ChromeDriver(@"dependencies")))
             {
+                wdriver.Manage().Timeouts().SetScriptTimeout(TimeSpan.FromSeconds(5));
                 wdriver.Navigate().GoToUrl(baseUrl + "people");
-                wdriver.Manage().Window.Maximize();
                 Assert.AreEqual(wdriver.Title, "ui.core: people");
                 wdriver.Quit();
             }
