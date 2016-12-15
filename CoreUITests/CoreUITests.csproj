@@ -79,6 +79,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="TestOtherSites.cs" />
     <Compile Include="NavTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
