@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -9,10 +10,10 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 namespace CoreUITests
 {
     [TestFixture]
-    public class NavTests
+    public class TestOtherSites
     {
         // public static string baseUrl = "http://localhost:10101/";
-        private const string BaseUrl = "http://coreui.azurewebsites.net/";
+        private const string BaseUrl = "https://trashmail.com/";
         private IWebDriver _driver;
 
         [SetUp]
@@ -37,36 +38,49 @@ namespace CoreUITests
             _driver.Quit();
         }
 
-        [Test(Description = "Dashboard should have title of ui.core: dashboard")]
-        public void DashboardTitle()
+        [Test(Description = "Trashmail should have title of TrashMail - Disposable email addresses")]
+        public void TrashMailTitle()
         {
             using (_driver)
             {
                 _driver.Navigate().GoToUrl(BaseUrl);
-                Assert.AreEqual(_driver.Title, "ui.core: dashboard");
+                Assert.AreEqual(_driver.Title, "TrashMail - Disposable email addresses");
             }
         }
 
-        [Test(Description = "People should have title of ui.core: people")]
-        public void PeopleTitle()
+
+        [Test(Description = "Trashmail should have domain of @Trashmail.com")]
+        public void DefaultDomain()
         {
             using (_driver)
             {
-                _driver.Navigate().GoToUrl(BaseUrl + "people");
-                Assert.AreEqual(_driver.Title, "ui.core: people");
+                _driver.Navigate().GoToUrl(BaseUrl);
+                var domain = _driver.FindElement(NgBy.Model("selectedDomain"));
+
+                Assert.AreEqual(domain.Text, "@trashmail.com ");
             }
         }
 
-        [Test(Description = "Widget should have title of ui.core: widget")]
-        public void WidgetTitle()
+        [Test(Description = "CAPTCHA should be set to Disable")]
+        public void DefaultCAPTCHA()
         {
             using (_driver)
             {
-                _driver.Navigate().GoToUrl(BaseUrl + "widget");
-                Assert.AreEqual(_driver.Title, "ui.core: widget");
+                _driver.Navigate().GoToUrl(BaseUrl);
+                var checkboxes = _driver.FindElements(By.XPath("//input[@name='form_whitelisting']"));
+
+                foreach (var checkbox in checkboxes)
+                {
+                    if (checkbox.Selected && checkbox.Displayed)
+                    {
+                        var label = checkbox.FindElement(By.XPath(".."));
+
+                        Assert.AreEqual(label.Text, "Disable CAPTCHA system");
+                    }
+                }
+
             }
         }
-
 
 
 
